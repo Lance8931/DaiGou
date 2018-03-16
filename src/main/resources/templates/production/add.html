@@ -73,23 +73,25 @@
 <script th:src="@{/layui/layui.js}"></script>
 <script>
 layui.use('form', function(){
-	var $ = layui.$;
-	var form = layui.form;
-	var index = parent.layer.getFrameIndex(window.name);
-	form.on('submit(demo1)', function(data){
-		$.ajax({
+    var $ = layui.$;
+    var form = layui.form;
+    var index = parent.layer.getFrameIndex(window.name);
+    form.load({'name':'yyyy', 'brandId': 3, 'buyPrice': '2000.0'});
+    form.render();
+    form.on('submit(demo1)', function(data){
+        $.ajax({
             url: '/production/',
-            type: "post",
+            type: "post",  
             dataType: "json",
             data: data.field,
             success:function(msg){
-            	parent.layer.msg('添加成功!');
-            	parent.reloadList();
+                parent.layer.msg('添加成功!');
+                parent.reloadList();
                 parent.layer.close(index);
             }
         });
-		return false;
-	});
+        return false;
+    });
 });
 </script> 
 </body>
