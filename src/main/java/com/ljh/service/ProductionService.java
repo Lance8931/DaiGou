@@ -5,13 +5,13 @@ import com.ljh.domain.entity.dto.ProductionInfo;
 import com.ljh.domain.entity.po.Production;
 
 public interface ProductionService {
-	PageBean<ProductionInfo> getProductionInfoList(int currentPage, int pageSize);
+    PageBean<ProductionInfo> getProductionInfoList(int currentPage, int pageSize);
 
-	Production findProductionById(long id);
+    Production findProductionById(long id);
 
-	void save(Production user);
+    void save(Production p);
 
-	void edit(Production user);
+    void edit(Production p);
 
-	void delete(long id);
+    void delete(long id);
 }

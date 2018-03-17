@@ -15,40 +15,37 @@ import com.ljh.service.ProductionService;
 @Service
 public class ProductionServiceImpl implements ProductionService {
 
-	@Autowired
-	private ProductionMapper productionMapper;
+    @Autowired
+    private ProductionMapper productionMapper;
 
-	@Override
-	public PageBean<ProductionInfo> getProductionInfoList(int currentPage, int pageSize) {
-		PageHelper.startPage(currentPage, pageSize);
-		List<ProductionInfo> items = productionMapper.findAllInfo();
-		int countNums = items.size();
-		PageBean<ProductionInfo> pageData = new PageBean<>(currentPage, pageSize, countNums);
-		pageData.setItems(items);
-		return pageData;
-	}
+    @Override
+    public PageBean<ProductionInfo> getProductionInfoList(int currentPage, int pageSize) {
+        PageHelper.startPage(currentPage, pageSize);
+        List<ProductionInfo> items = productionMapper.findAllInfo();
+        int countNums = items.size();
+        PageBean<ProductionInfo> pageData = new PageBean<>(currentPage, pageSize, countNums);
+        pageData.setItems(items);
+        return pageData;
+    }
 
-	@Override
-	public Production findProductionById(long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public Production findProductionById(long id) {
+        return productionMapper.findById(id);
+    }
 
-	@Override
-	public void save(Production p) {
-		productionMapper.insertByProduction(p);
-	}
+    @Override
+    public void save(Production p) {
+        productionMapper.insertByProduction(p);
+    }
 
-	@Override
-	public void edit(Production p) {
-		// TODO Auto-generated method stub
+    @Override
+    public void edit(Production p) {
+        productionMapper.update(p);
+    }
 
-	}
-
-	@Override
-	public void delete(long id) {
-		// TODO Auto-generated method stub
-
-	}
+    @Override
+    public void delete(long id) {
+        productionMapper.delete(id);
+    }
 
 }

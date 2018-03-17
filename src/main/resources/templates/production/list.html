@@ -25,9 +25,11 @@
 <script>
 var tableIns;
 layui.use('table', function(){
+  var $ = layui.$;
   var table = layui.table;
   tableIns = table.render({
     elem: '#test'
+    ,loading: true
     ,url: '/production/'
     ,request: {
     	pageName: 'currentPage'
@@ -62,11 +64,23 @@ layui.use('table', function(){
       layer.msg('ID：'+ data.id + ' 的查看操作');
     } else if(obj.event === 'del'){
       layer.confirm('真的删除行么', function(index){
-        obj.del();
-        layer.close(index);
+        $.ajax({
+          url: '/production/'+data.proId,
+          type: "delete",  
+          dataType: "json",
+          success:function(msg){
+              layer.msg('刪除成功!');
+              reloadList();
+              layer.close(index);
+          }
+        });
       });
     } else if(obj.event === 'edit'){
-      layer.alert('编辑行：<br />'+ JSON.stringify(data))
+      goEdit(data.proId);
+    } else if (obj.event === 'uploadphoto') {
+        goUploadPhoto(data.proId);
+    } else if (obj.event === 'deletephoto') {
+        
     }
   });
 });
@@ -83,6 +97,24 @@ layui.use('table', function(){
   function reloadList(){
     tableIns.reload({
       url: '/production/'
+    });
+  }
+  
+  function goEdit(id){
+    layer.open({
+      type: 2,
+      title: '产品信息编辑',
+      area: ['800px', '500px'],
+      content: '/production/edit?id='+id
+    });
+  }
+  
+  function goUploadPhoto(id){
+    layer.open({
+      type: 2,
+      title: '产品图片上传',
+      area: ['800px', '500px'],
+      content: '/production/uploadphoto?id='+id
     });
   }
 </script> 
