@@ -1,11 +1,17 @@
 package com.ljh.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -37,6 +43,9 @@ public class ProductionController {
 
     @Autowired
     private BrandService brandService;
+
+    @Value("${production.uploadphoto.savepath}")
+    private String uploadPath;
 
     @RequestMapping("/list")
     public String list(ModelMap map) {
@@ -118,7 +127,22 @@ public class ProductionController {
 
     @PostMapping(value = "/uploadphoto/{id}")
     @ResponseBody
-    public InfoResult uploadPhoto(@PathVariable Long id, MultipartFile[] photos) {
+    public InfoResult uploadPhoto(@PathVariable Long proId, MultipartFile photos, HttpServletRequest request) {
+        String filename = photos.getOriginalFilename();
+        String filePath = ClassUtils.getDefaultClassLoader().getResource("static").getPath() + uploadPath + filename;
+        try {
+            File newfile = new File(filePath);
+            if (!newfile.getParentFile().exists()) {
+                newfile.getParentFile().mkdir();
+            }
+            photos.transferTo(newfile);
+        } catch (IllegalStateException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         return new InfoResult();
     }
 }

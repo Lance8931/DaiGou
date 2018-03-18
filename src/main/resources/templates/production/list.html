@@ -78,9 +78,20 @@ layui.use('table', function(){
     } else if(obj.event === 'edit'){
       goEdit(data.proId);
     } else if (obj.event === 'uploadphoto') {
-        goUploadPhoto(data.proId);
+      goUploadPhoto(data.proId);
     } else if (obj.event === 'deletephoto') {
-        
+      layer.confirm('真的删除所有图片么', function(index){
+        $.ajax({
+          url: '/prophoto/byProId/'+data.proId,
+          type: "delete",  
+          dataType: "json",
+          success:function(msg){
+             layer.msg('刪除成功!');
+             reloadList();
+             layer.close(index);
+          }
+       });
+      });
     }
   });
 });
@@ -114,7 +125,7 @@ layui.use('table', function(){
       type: 2,
       title: '产品图片上传',
       area: ['800px', '500px'],
-      content: '/production/uploadphoto?id='+id
+      content: '/prophoto/uploadphoto?proId='+id
     });
   }
 </script> 
