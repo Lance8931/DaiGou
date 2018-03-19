@@ -33,5 +33,6 @@ spring:
       stat-view-servlet: 
         loginUsername: admin1
         loginPassword: admin1
+        resetEnable: false
   thymeleaf:
     cache: false
