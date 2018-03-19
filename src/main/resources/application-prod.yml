@@ -1,0 +1,38 @@
+logging: 
+  level: 
+    com: 
+      ljh: 
+        domain: 
+          mapper: info
+          
+production: 
+  uploadphoto: 
+    savepath: /uploadimg/
+    
+spring: 
+  datasource: 
+    driver-class-name: com.mysql.jdbc.Driver
+    password: Admin!@#$5678
+    url: jdbc:mysql://39.108.80.108:3306/daigou
+    username: root
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid: 
+      filters: stat,wall,log4j
+      maxActive: 20
+      initialSize: 1
+      maxWait: 60000
+      minIdle: 1
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: select 'x'
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxOpenPreparedStatements: 20
+      stat-view-servlet: 
+        loginUsername: admin1
+        loginPassword: admin1
+  thymeleaf: 
+    cache: false
