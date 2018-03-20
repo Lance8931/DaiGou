@@ -95,7 +95,7 @@ public class ProductionController {
     @ApiImplicitParam(name = "id", value = "产品ID", required = true, dataType = "Long")
     @GetMapping(value = "/{id}")
     @ResponseBody
-    public InfoResult getProduction(@PathVariable Long id) {
+    public InfoResult getProduction(@PathVariable(name="id",required=true) Long id) {
         // 处理"/users/{id}"的GET请求，用来获取url中id值的User信息
         // url中的id可通过@PathVariable绑定到函数的参数中
         InfoResult result = new InfoResult();
@@ -110,7 +110,9 @@ public class ProductionController {
             @ApiImplicitParam(name = "production", value = "需要更新的production信息", required = true, dataType = "Production") })
     @PutMapping(value = "/{id}")
     @ResponseBody
-    public InfoResult putProduction(@PathVariable Long id, @ModelAttribute Production production) {
+    public InfoResult putProduction(
+    		@PathVariable(name="id",required=true) Long id, 
+    		@ModelAttribute(name="production") Production production) {
         // 处理"/users/{id}"的PUT请求，用来更新User信息
         productionService.edit(production);
         return new InfoResult();
@@ -120,14 +122,14 @@ public class ProductionController {
     @ApiImplicitParam(name = "id", value = "产品ID", required = true, dataType = "Long")
     @DeleteMapping(value = "/{id}")
     @ResponseBody
-    public InfoResult deleteProduction(@PathVariable Long id) {
+    public InfoResult deleteProduction(@PathVariable(name="id",required=true) Long id) {
         productionService.delete(id);
         return new InfoResult();
     }
 
     @PostMapping(value = "/uploadphoto/{id}")
     @ResponseBody
-    public InfoResult uploadPhoto(@PathVariable Long proId, MultipartFile photos, HttpServletRequest request) {
+    public InfoResult uploadPhoto(@PathVariable(name="id",required=true) Long proId, MultipartFile photos, HttpServletRequest request) {
         String filename = photos.getOriginalFilename();
         String filePath = ClassUtils.getDefaultClassLoader().getResource("static").getPath() + uploadPath + filename;
         try {
