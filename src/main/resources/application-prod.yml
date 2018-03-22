@@ -1,9 +1,8 @@
 logging: 
-  level: 
-    com: 
-      ljh: 
-        domain: 
-          mapper: info
+  config: classpath:logbackxml/logback-spring-prod.xml
+  level.com.ljh.domain.mapper: info
+  file: daigou.log
+  path: /var/log
           
 production: 
   uploadphoto: 
