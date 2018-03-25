@@ -10,6 +10,20 @@
   <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.ico}" />
 </head>
 <body style="margin:20px 20px 20px 20px">
+
+<ul class="layui-nav">
+  <li class="layui-nav-item"><a href="">首页</a></li>
+  <li class="layui-nav-item layui-this">
+    <a th:href="@{/production/list}">产品信息</a>
+  </li>
+  <li class="layui-nav-item"><a th:href="@{/brand/list}">牌子信息</a></li>
+  <li class="layui-nav-item">
+    <a th:href="@{/customer/list}">顾客信息</a>
+  </li>
+  <li class="layui-nav-item"><a href="">价格变化</a></li>
+</ul>
+<br />
+
 <button class="layui-btn" onclick="goAdd()">
   <i class="layui-icon">&#xe608;</i> 添加
 </button> 
@@ -25,7 +39,7 @@
 <script th:src="@{/layui/layui.js}"></script>
 <script>
 var tableIns;
-layui.use('table', function(){
+layui.use(['table','element'], function(){
   var $ = layui.$;
   var table = layui.table;
   tableIns = table.render({
@@ -42,27 +56,22 @@ layui.use('table', function(){
   	}  
     ,cols: [[
       {type:'numbers'}
-      ,{type:'checkbox'}
-      ,{field:'proName', width:200, title: '产品名称', align:'center'}
-      ,{field:'zhName', width:100, title: '牌子-中文', align:'center'}
-      ,{field:'enName', width:100, title: '牌子-英文', align:'center'}
-      ,{field:'spec', width: 100, title: '规格', align:'center'}
-      ,{field:'orgiPrice', width:100, title: '原价(HKD)', align:'center'}
-      ,{field:'buyPrice', width:130, title: '购买价格(HKD)', align:'center'}
-      ,{field:'buyAddress', width:100, title: '购买地址', align:'center'}
-      ,{fixed: 'right', width:300, title: '操作', align:'center', toolbar: '#barDemo'}
+      ,{field:'proName', title: '产品名称', align:'center'}
+      ,{field:'zhName', title: '牌子-中文', align:'center'}
+      ,{field:'enName', title: '牌子-英文', align:'center'}
+      ,{field:'spec', title: '规格', align:'center'}
+      ,{field:'orgiPrice', title: '原价(HKD)', align:'center'}
+      ,{field:'buyPrice', title: '购买价格(HKD)', align:'center'}
+      ,{field:'buyAddress', title: '购买地址', align:'center'}
+      ,{fixed: 'right',minWidth:300, title: '操作', align:'center', toolbar: '#barDemo'}
     ]]
     ,page: true
-  });
-  //监听表格复选框选择
-  table.on('checkbox(demo)', function(obj){
-    console.log(obj)
   });
   //监听工具条
   table.on('tool(demo)', function(obj){
     var data = obj.data;
     if(obj.event === 'detail'){
-      layer.msg('ID：'+ data.id + ' 的查看操作');
+      goDetail(data.proId);
     } else if(obj.event === 'del'){
       layer.confirm('真的删除行么', function(index){
         $.ajax({
@@ -127,6 +136,15 @@ layui.use('table', function(){
       title: '产品图片上传',
       area: ['800px', '500px'],
       content: '/prophoto/uploadphoto?proId='+id
+    });
+  }
+  
+  function goDetail(id){
+    layer.open({
+      type: 2,
+      title: '产品详情',
+      area: ['800px', '500px'],
+      content: '/production/detail?id='+id
     });
   }
 </script> 

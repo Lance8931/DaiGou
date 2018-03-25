@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="renderer" content="webkit" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>代购</title>
+  <link rel="stylesheet" th:href="@{/layui/css/layui.css}" />
+  <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.ico}" />
+</head>
+<body style="margin:20px 20px 20px 20px">
+
+<ul class="layui-nav">
+  <li class="layui-nav-item"><a href="">首页</a></li>
+  <li class="layui-nav-item">
+    <a th:href="@{/production/list}">产品信息</a>
+  </li>
+  <li class="layui-nav-item"><a th:href="@{/brand/list}">牌子信息</a></li>
+  <li class="layui-nav-item layui-this">
+    <a th:href="@{/customer/list}">顾客信息</a>
+  </li>
+  <li class="layui-nav-item"><a href="">价格变化</a></li>
+</ul>
+<br />
+
+<button class="layui-btn" onclick="goAdd()">
+  <i class="layui-icon">&#xe608;</i> 添加
+</button> 
+<table class="layui-hide" id="test" lay-filter="demo"></table>
+
+<script type="text/html" id="barDemo">
+  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script th:src="@{/layui/layui.js}"></script>
+<script>
+var tableIns;
+layui.use(['table','element'], function(){
+  var $ = layui.$;
+  var table = layui.table;
+  tableIns = table.render({
+    elem: '#test'
+    ,loading: true
+    ,url: '/customer/'
+    ,request: {
+    	pageName: 'currentPage'
+    	,limitName: 'pageSize'
+    }
+    ,response: {
+  	  countName: 'totalNum' //数据总数的字段名称，默认：count
+  	 ,dataName: 'items' //数据列表的字段名称，默认：data
+  	}  
+    ,cols: [[
+      {type:'numbers'}
+      ,{field:'name', title: '姓名', align:'center'}
+      ,{field:'phone', title: '电话', align:'center'}
+      ,{field:'address', title: '地址', align:'center'}
+      ,{field:'referee', title: '推荐人', align:'center'}
+      ,{fixed: 'right',minWidth:300, title: '操作', align:'center', toolbar: '#barDemo'}
+    ]]
+    ,page: true
+  });
+  //监听工具条
+  table.on('tool(demo)', function(obj){
+    var data = obj.data;
+    if(obj.event === 'del'){
+      layer.confirm('真的删除行么', function(index){
+        $.ajax({
+          url: '/customer/'+data.id,
+          type: "delete",  
+          dataType: "json",
+          success:function(msg){
+              layer.msg('刪除成功!');
+              reloadList();
+              layer.close(index);
+          }
+        });
+      });
+    } else if(obj.event === 'edit'){
+      goEdit(data.id);
+    }
+  });
+});
+
+  function goAdd(){
+    layer.open({
+      type: 2,
+      title: '顾客信息添加',
+      area: ['800px', '550px'],
+      content: '/customer/add'
+    });
+  }
+  
+  function reloadList(){
+    tableIns.reload({
+      url: '/customer/'
+    });
+  }
+  
+  function goEdit(id){
+    layer.open({
+      type: 2,
+      title: '顾客信息编辑',
+      area: ['800px', '500px'],
+      content: '/customer/edit?id='+id
+    });
+  }
+</script> 
+</body>
+</html>

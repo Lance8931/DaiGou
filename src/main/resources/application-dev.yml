@@ -1,6 +1,6 @@
 logging:
   config: classpath:logbackxml/logback-spring-dev.xml
-  level.com.ljh.*: info
+  level.com.ljh.domain.mapper: debug
 production: 
   uploadphoto:
     savepath: /uploadimg/

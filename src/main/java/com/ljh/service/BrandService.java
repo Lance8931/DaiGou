@@ -3,16 +3,16 @@ package com.ljh.service;
 import java.util.List;
 
 import com.ljh.domain.entity.po.Brand;
-import com.ljh.domain.entity.po.Production;
-
 
 public interface BrandService {
 
-	List<Brand> findAll();
-	
-	void save(Production user);
+    List<Brand> findAll();
 
-	void edit(Production user);
+    Brand findById(Long id);
 
-	void delete(long id);
+    int save(Brand brand);
+
+    int edit(Brand brand);
+
+    int delete(long id);
 }

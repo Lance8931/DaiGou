@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="renderer" content="webkit" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>牌子编辑</title>
+  <link rel="stylesheet" th:href="@{/layui/css/layui.css}" />
+</head>
+<body style="margin:20px 20px 20px 20px">
+ 
+<form class="layui-form">
+  <input type="text" hidden="hidden" name="id" id="id" th:value="${id}" />
+  <div class="layui-form-item">
+    <label class="layui-form-label">中文名称</label>
+    <div class="layui-input-block">
+      <input type="text" name="zhName" lay-verify="required" autocomplete="off" placeholder="请输入中文名称" class="layui-input" />
+    </div>
+  </div>
+  
+  <div class="layui-form-item">
+    <label class="layui-form-label">英文名称</label>
+    <div class="layui-input-block">
+      <input type="text" name="enName" lay-verify="required" autocomplete="off" placeholder="请输入英文名称" class="layui-input" />
+    </div>
+  </div>
+  
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+  </div>
+</form>
+
+<script th:src="@{/layui/layui.js}"></script>
+<script>
+layui.use('form', function(){
+    var $ = layui.$;
+    var form = layui.form;
+    var index = parent.layer.getFrameIndex(window.name);
+    $.ajax({
+        url: '/brand/'+$("#id").val(),
+        type: "get",  
+        dataType: "json",
+        success:function(result){
+          form.load(result.data.item);
+          form.render();
+        }
+    });
+    form.on('submit(demo1)', function(data){
+        $.ajax({
+            url: '/brand/'+data.field.id,
+            type: "put",  
+            dataType: "json",
+            data: data.field,
+            success:function(msg){
+                parent.layer.msg('修改成功!');
+                parent.reloadList();
+                parent.layer.close(index);
+            }
+        });
+        return false;
+    });
+});
+</script> 
+</body>
+</html>
