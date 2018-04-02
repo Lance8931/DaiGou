@@ -7,6 +7,8 @@ import com.ljh.domain.entity.po.Customer;
 public interface CustomerService {
 
     List<Customer> findAll();
+    
+    List<Customer> findAllAndReferees();
 
     Customer findById(Long id);
 

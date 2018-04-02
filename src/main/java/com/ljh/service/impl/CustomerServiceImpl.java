@@ -35,6 +35,11 @@ public class CustomerServiceImpl implements CustomerService {
     public List<Customer> findAll() {
         return customerMapper.findAll();
     }
+    
+    @Override
+    public List<Customer> findAllAndReferees() {
+        return customerMapper.findAllAndReferees();
+    }
 
     @Override
     public Customer findById(Long id) {

@@ -15,6 +15,9 @@ public interface CustomerMapper {
 
     @Select(value = "select id, address, name, phone, referee from customer order by id")
     List<Customer> findAll();
+    
+    @Select(value="select a.id, a.address, a.name, a.phone, b.name as referee from customer a left outer join customer b on a.referee = b.id")
+    List<Customer> findAllAndReferees();
 
     @Select(value = "select id, address, name, phone, referee from customer where id = #{id}")
     Customer findById(Long id);

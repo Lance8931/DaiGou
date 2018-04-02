@@ -34,10 +34,12 @@
   
   <div class="layui-form-item">
      <label class="layui-form-label">推荐人</label>
-     <div class="layui-input-inline">
-       <select name="referee" th:kkk="${#lists.size(customers)}" lay-search="">
-         <option value="">直接选择或搜索选择</option>
-         <option th:each="customer : ${customers}" th:value="${customer.id}" th:text="${customer.name}"></option>
+     <div class="layui-input-inline" style="width:60px">
+       <input type="checkbox" lay-skin="switch" lay-filter="refereeSwitch" lay-text="有|无" />
+     </div>
+     <div class="layui-input-inline">  
+       <select name="referee" lay-search="" id="referee" lay-filter="refereeFilter" disabled="disabled">
+         <option value="">打开选择</option>
        </select>
      </div>
   </div>
@@ -69,6 +71,28 @@ layui.use('form', function(){
             }
         });
         return false;
+    });
+    
+    //监听指定开关
+    form.on('switch(refereeSwitch)', function(data){
+      $("#referee").empty();
+      if (this.checked) {
+    	 $("#referee").removeAttr("disabled");
+    	 $("#referee").append('<option value="">直接选择或搜索选择</option>');
+    	 $.getJSON(
+           '/customer/',
+           function(data){
+        	 $.each(data.items, function(i, item){
+        	   $("#referee").append('<option value="'+item.id+'">'+item.name+'</option>');
+        	 })
+        	 form.render("select");
+           }
+    	 );
+      } else {
+    	$("#referee").attr("disabled", "disabled");
+    	$("#referee").append('<option value="">打开选择</option>');
+    	form.render("select");
+      }
     });
 });
 </script> 

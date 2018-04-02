@@ -63,7 +63,7 @@ layui.define("layer", function (e) {
                 		 }
                 	 } else if (fieldTagName == "select") {
                 		 for (var z = 0; z < formField[0].length; z++){
-                			 if (parseInt(formField[0][z].value) === value) {
+                			 if (parseInt(formField[0][z].value) === parseInt(value)) {
                 				 formField[0][z].selected = true;
                 				 break;
                 			 }

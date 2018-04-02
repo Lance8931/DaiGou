@@ -39,7 +39,6 @@ public class CustomerController {
 
     @RequestMapping("/add")
     public String add(ModelMap map) {
-        map.put("customers", customerService.findAll());
         return "customer/add";
     }
 
@@ -54,7 +53,16 @@ public class CustomerController {
     @GetMapping(value = "/")
     @ResponseBody
     public ListResult<Customer> getCustomerList() {
-        List<Customer> list = customerService.findAll();
+        List<Customer> list = customerService.findAllAndReferees();
+        ListResult<Customer> result = new ListResult<Customer>(list.size(), list);
+        return result;
+    }
+    
+    @ApiOperation(value = "获取顾客列表除了", notes = "")
+    @GetMapping(value = "/customerButOneList")
+    @ResponseBody
+    public ListResult<Customer> getCustomerButOneList(Long id) {
+        List<Customer> list = customerService.findALLButOne(id);
         ListResult<Customer> result = new ListResult<Customer>(list.size(), list);
         return result;
     }

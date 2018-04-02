@@ -56,7 +56,14 @@ layui.use(['table','element'], function(){
       ,{field:'name', title: '姓名', align:'center'}
       ,{field:'phone', title: '电话', align:'center'}
       ,{field:'address', title: '地址', align:'center'}
-      ,{field:'referee', title: '推荐人', align:'center'}
+      ,{field:'referee', title: '推荐人', align:'center', 
+    	  templet: function(d){
+    	    if(d.referee === "" || d.referee == null){
+    	    	return '无';
+    	    } else {
+    	    	return d.referee;
+    	    }
+      }}
       ,{fixed: 'right',minWidth:300, title: '操作', align:'center', toolbar: '#barDemo'}
     ]]
     ,page: true
