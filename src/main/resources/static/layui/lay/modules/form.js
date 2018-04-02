@@ -33,7 +33,7 @@ layui.define("layer", function (e) {
 		i
 	},
 	c.prototype.load = function (e) {
-		var isDebug = true;
+		var isDebug = false;
 		//如果传入的json字符串，将转为json对象
 		if (t.type(e) === "string") {
 			e = t.parseJSON(e);
