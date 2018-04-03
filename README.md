@@ -20,6 +20,8 @@ layUI+Springboot+Mybati+thymeleaf+swagger2+druid
 - [ ] 用户管理
   - [ ] 登录
 - [ ] 接口文档
+  - [ ] 配置文件
+  - [ ] 完善
 
 ------
 ### 待优化
