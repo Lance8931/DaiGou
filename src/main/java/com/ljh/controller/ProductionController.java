@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,9 +27,7 @@ import com.ljh.domain.entity.PageBean;
 import com.ljh.domain.entity.dto.ProductionInfo;
 import com.ljh.domain.entity.po.PriceChangeLog;
 import com.ljh.domain.entity.po.Production;
-import com.ljh.service.BrandService;
 import com.ljh.service.PriceChangeLogService;
-import com.ljh.service.ProPhotoService;
 import com.ljh.service.ProductionService;
 
 import io.swagger.annotations.ApiImplicitParam;
@@ -45,48 +42,10 @@ public class ProductionController {
 	private ProductionService productionService;
 
 	@Autowired
-	private BrandService brandService;
-
-	@Autowired
-	private ProPhotoService proPhotoService;
-
-	@Autowired
 	private PriceChangeLogService priceChangeLogService;
 
 	@Value("${production.uploadphoto.savepath}")
 	private String uploadPath;
-
-	@RequestMapping("/list")
-	public String list(ModelMap map) {
-		return "production/list";
-	}
-
-	@RequestMapping("/add")
-	public String add(ModelMap map) {
-		map.put("brands", brandService.findAll());
-		return "production/add";
-	}
-
-	@RequestMapping("/edit")
-	public String edit(ModelMap map, Long id) {
-		map.put("id", id);
-		map.put("brands", brandService.findAll());
-		return "production/edit";
-	}
-
-	@RequestMapping("/detail")
-	public String detail(ModelMap map, Long id) {
-		map.put("id", id);
-		map.put("brands", brandService.findAll());
-		map.put("photos", proPhotoService.findAllByProId(id));
-		return "production/detail";
-	}
-
-	@RequestMapping("/uploadphoto")
-	public String uploadPhoto(ModelMap map, Long id) {
-		map.put("id", id);
-		return "production/uploadphoto";
-	}
 
 	@ApiOperation(value = "获取产品列表", notes = "")
 	@GetMapping(value = "/")

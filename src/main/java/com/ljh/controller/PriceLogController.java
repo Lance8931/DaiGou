@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,21 +18,18 @@ import com.ljh.domain.entity.dto.PriceLogInfo;
 import com.ljh.domain.entity.po.PriceChangeLog;
 import com.ljh.service.PriceChangeLogService;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
+@Api(value="价格变化有关接口")
 @Controller
 @RequestMapping("/pricelog")
 public class PriceLogController {
 
     @Autowired
     private PriceChangeLogService logService;
-
-    @RequestMapping("/list")
-    public String list(ModelMap map) {
-        return "pricelog/list";
-    }
 
     @ApiOperation(value = "获取价格变化列表", notes = "")
     @GetMapping(value = "/")

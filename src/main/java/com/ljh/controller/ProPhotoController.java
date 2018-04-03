@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,12 +30,6 @@ public class ProPhotoController {
 
     @Value("${production.uploadphoto.savepath}")
     private String uploadPath;
-
-    @RequestMapping("/uploadphoto")
-    public String uploadPhoto(ModelMap map, Long proId) {
-        map.put("proId", proId);
-        return "prophoto/upload";
-    }
 
     @PostMapping(value = "/uploadphoto/{proId}")
     @ResponseBody

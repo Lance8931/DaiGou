@@ -6,7 +6,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -31,22 +30,6 @@ public class BrandController {
 
     @Autowired
     private BrandService brandService;
-
-    @RequestMapping("/list")
-    public String list(ModelMap map) {
-        return "brand/list";
-    }
-
-    @RequestMapping("/add")
-    public String add(ModelMap map) {
-        return "brand/add";
-    }
-
-    @RequestMapping("/edit")
-    public String edit(ModelMap map, Integer id) {
-        map.put("id", id);
-        return "brand/edit";
-    }
 
     @ApiOperation(value = "获取牌子列表", notes = "")
     @GetMapping(value = "/")
