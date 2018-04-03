@@ -8,11 +8,16 @@ public class PriceChangeLog {
 
 	private Double currentPrice;
 
-	private Integer proId;
+	private Long proId;
 	
 	private Date createTime;
 	
 	public PriceChangeLog() {}
+	
+	public PriceChangeLog(Double currentPrice, Long proId) {
+		this.currentPrice = currentPrice;
+		this.proId = proId;
+	}
 
 	public Long getId() {
 		return id;
@@ -30,11 +35,11 @@ public class PriceChangeLog {
 		this.currentPrice = currentPrice;
 	}
 
-	public Integer getProId() {
+	public Long getProId() {
 		return proId;
 	}
 
-	public void setProId(Integer proId) {
+	public void setProId(Long proId) {
 		this.proId = proId;
 	}
 

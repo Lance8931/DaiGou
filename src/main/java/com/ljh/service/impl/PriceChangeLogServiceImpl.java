@@ -5,40 +5,40 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ljh.domain.entity.po.Brand;
-import com.ljh.domain.mapper.BrandMapper;
-import com.ljh.service.BrandService;
+import com.ljh.domain.entity.dto.PriceLogInfo;
+import com.ljh.domain.entity.po.PriceChangeLog;
+import com.ljh.domain.mapper.PriceChangeLogMapper;
 import com.ljh.service.PriceChangeLogService;
 
 @Service
 public class PriceChangeLogServiceImpl implements PriceChangeLogService {
 
     @Autowired
-    private BrandMapper brandMapper;
+    private PriceChangeLogMapper logMapper;
 
     @Override
-    public int save(Brand brand) {
-        return brandMapper.save(brand);
+    public int save(PriceChangeLog brand) {
+        return logMapper.save(brand);
     }
 
     @Override
-    public int edit(Brand brand) {
-        return brandMapper.update(brand);
+    public int edit(PriceChangeLog brand) {
+        return logMapper.update(brand);
     }
 
     @Override
     public int delete(long id) {
-        return brandMapper.delete(id);
+        return logMapper.delete(id);
     }
 
     @Override
-    public List<Brand> findAll() {
-        return brandMapper.findAll();
+    public List<PriceLogInfo> findAll() {
+        return logMapper.findAll();
     }
 
     @Override
-    public Brand findById(Long id) {
-        return brandMapper.findById(id);
+    public List<PriceLogInfo> findById(Long id) {
+        return logMapper.findById(id);
     }
 
 }
