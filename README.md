@@ -1,10 +1,13 @@
 # 代购
-## 用到的技术或者框架
+
+------
+### 用到的技术或者框架
 layUI+Springboot+Mybati+thymeleaf+swagger2+druid
 
 添加form.js的load方法
 
-## 待完成的功能
+------
+### 待完成的功能
 - [ ] 价格变化
   - [ ] 变化的时候添加
   - [ ] 删除
@@ -18,5 +21,10 @@ layUI+Springboot+Mybati+thymeleaf+swagger2+druid
   - [ ] 登录
 - [ ] 接口文档
 
-## 说明
+------
+### 待优化
+- [ ] 将controller的业务逻辑移动至service层
+
+------
+### 说明
 仅仅是用于个人代购时的类似账本统计
