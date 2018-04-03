@@ -9,9 +9,9 @@ layUI+Springboot+Mybati+thymeleaf+swagger2+druid
 ------
 ### 待完成的功能
 - [ ] 价格变化
-  - [ ] 变化的时候添加
-  - [ ] 删除
-  - [ ] 编辑，仅仅修改金额
+  - [x] 变化的时候添加
+  - [x] 删除
+  - [x] 编辑，仅仅修改金额
   - [ ] 图表查看-折线图
 - [ ] 购物单
   - [ ] 创建
@@ -27,4 +27,4 @@ layUI+Springboot+Mybati+thymeleaf+swagger2+druid
 
 ------
 ### 说明
-仅仅是用于个人代购时的类似账本统计
+仅仅是用于个人代购时的产品数据收集，简单统计

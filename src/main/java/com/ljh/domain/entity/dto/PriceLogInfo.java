@@ -3,13 +3,13 @@ package com.ljh.domain.entity.dto;
 public class PriceLogInfo {
 
 	private Long id;
+	private Long proId;
 	private String proName;
 	private Double currentPrice;
 
 	public PriceLogInfo() {
 	}
 
-	
 	public Long getId() {
 		return id;
 	}
@@ -38,4 +38,15 @@ public class PriceLogInfo {
 	public void setCurrentPrice(Double currentPrice) {
 		this.currentPrice = currentPrice;
 	}
+
+	
+	public Long getProId() {
+		return proId;
+	}
+
+	public void setProId(Long proId) {
+		this.proId = proId;
+	}
+
+	
 }

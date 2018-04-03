@@ -30,6 +30,8 @@
 <table class="layui-hide" id="test" lay-filter="demo"></table>
 
 <script type="text/html" id="barDemo">
+  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-xs" lay-event="delete">删除</a>
   <a class="layui-btn layui-btn-xs" lay-event="priceline">查看价格曲线</a>
 </script>
 <script th:src="@{/layui/layui.js}"></script>
@@ -41,7 +43,7 @@ layui.use(['table','element'], function(){
   tableIns = table.render({
     elem: '#test'
     ,loading: true
-    ,url: '/brand/'
+    ,url: '/pricelog/'
     ,request: {
     	pageName: 'currentPage'
     	,limitName: 'pageSize'
@@ -52,8 +54,8 @@ layui.use(['table','element'], function(){
   	}  
     ,cols: [[
       {type:'numbers'}
-      ,{field:'zhName', title: '产品名称', align:'center'}
-      ,{field:'enName', title: '当前价格', align:'center'}
+      ,{field:'proName', title: '产品名称', align:'center'}
+      ,{field:'currentPrice', edit: 'text', title: '当前价格', align:'center'}
       ,{fixed: 'right', title: '操作', align:'center', toolbar: '#barDemo'}
     ]]
     ,page: true
@@ -63,22 +65,62 @@ layui.use(['table','element'], function(){
     var data = obj.data;
     if(obj.event === 'priceline'){
       goPriceLine(data.id);
+    } else if(obj.event === 'edit'){
+      goEdit(data.proId);
+    } else if(obj.event === 'delete'){
+      layer.confirm('真的删除行么', function(index){
+          $.ajax({
+            url: '/pricelog/'+data.proId,
+            type: "delete",  
+            dataType: "json",
+            success:function(msg){
+              layer.msg('刪除成功!');
+              reloadList();
+              layer.close(index);
+            }
+          });
+      });
     }
+  });
+  
+  table.on('edit(demo)', function(obj){
+	var value = obj.value //得到修改后的值
+	 ,data = obj.data //得到所在行所有键值
+	 ,field = obj.field; //得到字段
+	$.ajax({
+	  url: '/pricelog/'+data.id,
+	  type: "put",  
+      dataType: "json",
+      data: obj.data,
+      success:function(msg){
+          layer.msg('修改成功!');
+          reloadList();
+      }
+	});
   });
 });
 
   function reloadList(){
     tableIns.reload({
-      url: '/brand/'
+      url: '/pricelog/'
     });
   }
   
   function goPriceLine(id){
     layer.open({
       type: 2,
-      title: '产品信息编辑',
+      title: '价格曲线',
       area: ['400px', '230px'],
-      content: '/brand/edit?id='+id
+      content: '/pricelog/proid?id='+id
+    });
+  }
+  
+  function goEdit(id){
+    layer.open({
+      type: 2,
+      title: '编辑',
+      area: ['800px', '500px'],
+      content: '/pricelog/edit?id='+id
     });
   }
 </script> 

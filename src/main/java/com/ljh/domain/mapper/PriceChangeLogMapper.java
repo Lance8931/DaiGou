@@ -14,11 +14,11 @@ import com.ljh.domain.entity.po.PriceChangeLog;
 @Mapper
 public interface PriceChangeLogMapper {
 	
-	@Select(value = "select id, zh_name as zhName, en_name as enName from brand order by id")
+	@Select(value = "select a.id, a.pro_id as proId, b.name as proName, a.current_price as currentPrice from price_change_log a left outer join production b on a.pro_id = b.id order by a.id")
     List<PriceLogInfo> findAll();
 
-    @Select(value = "select id, en_name as enName, zh_name as zhName from brand where id = #{id}")
-    List<PriceLogInfo> findById(Long id);
+    @Select(value = "select a.id, b.name as proName, a.current_price as currentPrice from price_change_log a left outer join production b on a.pro_id = b.id where a.pro_id = #{proId} order by a.id")
+    List<PriceLogInfo> findById(Long proId);
 
     @Insert(value = "insert into price_change_log (pro_id, current_price) values (#{proId}, #{currentPrice})")
     int save(PriceChangeLog log);
