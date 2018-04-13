@@ -30,22 +30,33 @@ public class ProPhotoController {
 
     @Value("${production.uploadphoto.savepath}")
     private String uploadPath;
+    
+    @Value("${production.uploadphoto.copypath}")
+	private String copyPath;
 
     @PostMapping(value = "/uploadphoto/{proId}")
     @ResponseBody
     public InfoResult uploadPhoto(@PathVariable Long proId, MultipartFile photos, HttpServletRequest request) {
         String filename = photos.getOriginalFilename();
-        String filePath = ClassUtils.getDefaultClassLoader().getResource("static").getPath() + uploadPath + proId + "/" + filename;
+        String filePath = ClassUtils.getDefaultClassLoader().getResource("static").getPath() + uploadPath + proId + "/"
+				+ filename;
+		String copyPath1 = copyPath + proId + "/" + filename;
         try {
-            File newfile = new File(filePath);
-            if (!newfile.getParentFile().exists()) {
-                newfile.getParentFile().mkdirs();
-            }
-            photos.transferTo(newfile);
-            int i = proPhotoService.save(new ProPhoto(proId, filePath, filename));
-            if (i <= 0) {
-                newfile.delete();
-            }
+			File newfile = new File(filePath);
+			File copyfile = new File(copyPath1);
+			if (!newfile.getParentFile().exists()) {
+				newfile.getParentFile().mkdirs();
+			}
+			if (!copyfile.getParentFile().exists()) {
+				copyfile.getParentFile().mkdirs();
+			}
+			photos.transferTo(newfile);
+			photos.transferTo(copyfile);
+			int i = proPhotoService.save(new ProPhoto(proId, filePath, filename));
+			if (i <= 0) {
+				newfile.delete();
+				copyfile.delete();
+			}
         } catch (IllegalStateException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
