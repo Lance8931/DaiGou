@@ -4,6 +4,7 @@ logging:
 production: 
   uploadphoto:
     savepath: /uploadimg/
+    copypath: D://images/
     
 spring:
   datasource: 
