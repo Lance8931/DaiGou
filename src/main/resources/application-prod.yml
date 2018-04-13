@@ -6,7 +6,8 @@ logging:
           
 production: 
   uploadphoto: 
-    savepath: /home/daigou-web/images/
+    copypath: /home/daigou-web/images/
+    savepath: /uploadimg/
     
 spring: 
   datasource: 
