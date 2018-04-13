@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ljh.domain.entity.InfoResult;
 import com.ljh.domain.entity.po.ProPhoto;
 import com.ljh.service.ProPhotoService;
+import com.ljh.util.Utils;
 
 @Controller
 @RequestMapping("/prophoto")
@@ -51,7 +52,7 @@ public class ProPhotoController {
 				copyfile.getParentFile().mkdirs();
 			}
 			photos.transferTo(newfile);
-			photos.transferTo(copyfile);
+			Utils.copyFile(newfile, copyfile);
 			int i = proPhotoService.save(new ProPhoto(proId, filePath, filename));
 			if (i <= 0) {
 				newfile.delete();
