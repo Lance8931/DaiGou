@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.ljh.domain.entity.PageBean;
 import com.ljh.domain.entity.dto.ProductionInfo;
@@ -20,10 +21,9 @@ public class ProductionServiceImpl implements ProductionService {
 
     @Override
     public PageBean<ProductionInfo> getProductionInfoList(int currentPage, int pageSize) {
-        PageHelper.startPage(currentPage, pageSize);
+        Page<ProductionInfo> page = PageHelper.startPage(currentPage, pageSize);
         List<ProductionInfo> items = productionMapper.findAllInfo();
-        int countNums = items.size();
-        PageBean<ProductionInfo> pageData = new PageBean<>(currentPage, pageSize, countNums);
+        PageBean<ProductionInfo> pageData = new PageBean<>(currentPage, pageSize, Integer.parseInt(page.getTotal()+""));
         pageData.setItems(items);
         return pageData;
     }
